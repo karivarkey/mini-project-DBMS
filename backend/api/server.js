@@ -22,6 +22,12 @@ mongoose
   );
 
 
+app.get("/api/manufacturer", async (request, response) => {
+    const manufacturers = await ManufacturerSchema.find({});
+    response.json(manufacturers);
+  });
+
+
   app.post("/api/manufacturer",async  (request, response) => {
     
     
