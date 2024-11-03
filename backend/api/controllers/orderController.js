@@ -94,21 +94,38 @@ exports.getOrders = async (req, res) => {
 
 // Get an order by ID
 exports.getOrderById = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.id)
-      .populate("userId", "username")
-      .populate("products", "productName")
-      .populate("manufacturers", "name");
-
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
+    try {
+      const order = await Order.findById(req.params.id)
+        .populate("userId", "username")
+        .populate({
+          path: "products",
+          model: "Toy",
+          select: "productName price manufacturer" // Populate only necessary fields
+        });
+  
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+  
+      // Fetch manufacturers for each product in the order
+      const productIds = order.products.map(product => product._id);
+      const toys = await Toy.find({ _id: { $in: productIds } })
+        .populate("manufacturer", "manufacturerName"); // Populate manufacturer details
+  
+      // Create an array of manufacturers based on the toys
+      const manufacturers = toys.map(toy => toy.manufacturer);
+  
+      // Return order along with the manufacturers
+      res.json({
+        ...order._doc, // Spread order properties
+        manufacturers, // Add the populated manufacturers array
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "An error occurred while retrieving the order" });
     }
-    res.json(order);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "An error occurred while retrieving the order" });
-  }
-};
+  };
+  
 
 // Update an order
 exports.updateOrder = async (req, res) => {
