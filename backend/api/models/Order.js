@@ -43,6 +43,11 @@ const OrderSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now
+  },
+  status:{
+    type: String,
+    required: true,
+    default: "Pending"
   }
 });
 
