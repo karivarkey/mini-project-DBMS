@@ -1,18 +1,15 @@
-import { useState } from "react";
-
-export default function App() {
-  let [x, setX] = useState(10);
-
-  function increment() {
-    setX(x + 5);
-  }
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "./pages/landing";
+import Sell from "./pages/sell";
+const App = () => {
   return (
-    <div className="text-4xl flex flex-col ">
-      {x}
-
-      <button className="bg-red-900 p-2" onClick={increment}>
-        INCREMENT
-      </button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/sell" element={<Sell />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
+
+export default App;
