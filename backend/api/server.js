@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 
 const manufacturerRoutes = require("./routes/manufacturerRoutes");
 const toyRoutes = require("./routes/toyRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ connectDB();
 // Routes
 app.use("/api/manufacturer", manufacturerRoutes);
 app.use("/api/toys", toyRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
