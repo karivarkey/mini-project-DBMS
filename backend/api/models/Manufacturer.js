@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const ManufacturerSchema = new mongoose.Schema({
     uid: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         type: String,
@@ -34,4 +35,4 @@ const ManufacturerSchema = new mongoose.Schema({
 
 
 // Export the model
-module.exports = ManufacturerSchema;
+module.exports = mongoose.models.Manufacturer || mongoose.model("Manufacturer", ManufacturerSchema);
