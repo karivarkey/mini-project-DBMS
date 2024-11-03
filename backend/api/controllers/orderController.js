@@ -129,40 +129,42 @@ exports.getOrderById = async (req, res) => {
 
 // Update an order
 exports.updateOrder = async (req, res) => {
-  try {
-    const { products, individualPrices, shipping, address, ETA } = req.body;
-
-    const toyDocs = await Toy.find({ _id: { $in: products } }).populate("manufacturer");
-    const manufacturers = [...new Set(toyDocs.map(toy => toy.manufacturer))];
-
-    const total = individualPrices.reduce((acc, price) => acc + price, 0) + shipping;
-
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id,
-      {
-        products,
-        price: {
-          individualPrices,
-          shipping,
-          total
-        },
-        address,
-        manufacturers,
-        ETA
-      },
-      { new: true }
-    ).populate("userId", "username").populate("products", "productName").populate("manufacturers", "name");
-
-    if (!updatedOrder) {
-      return res.status(404).json({ error: "Order not found" });
+    try {
+      // Destructure the fields that can be updated
+      const { products, individualPrices, shipping, address, ETA, status } = req.body;
+  
+      // Prepare an update object to hold the new values
+      const update = {};
+  
+      // Add properties to the update object if they exist in the request body
+      if (products) update.products = products;
+      if (individualPrices) update.price = update.price || {}; // Create price object if not already created
+      if (individualPrices) update.price.individualPrices = individualPrices; // Update individualPrices
+      if (shipping) update.price.shipping = shipping; // Update shipping cost
+      if (address) update.address = address; // Update address
+      if (ETA) update.ETA = ETA; // Update ETA
+      if (status) update.status = status; // Update status
+  
+      // Perform the update operation
+      const updatedOrder = await Order.findByIdAndUpdate(
+        req.params.id,
+        update,
+        { new: true }
+      );
+  
+      if (!updatedOrder) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+  
+      // Return the updated order
+      res.json(updatedOrder);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "An error occurred while updating the order" });
     }
-    res.json(updatedOrder);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "An error occurred while updating the order" });
-  }
-};
-
+  };
+  
+  
 // Delete an order
 exports.deleteOrder = async (req, res) => {
   try {

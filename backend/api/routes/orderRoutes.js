@@ -13,7 +13,7 @@ router.get("/", orderController.getOrders);
 router.get("/:id", orderController.getOrderById);
 
 // Update an order by ID
-router.put("/:id", orderController.updateOrder);
+router.patch("/:id", orderController.updateOrder);
 
 // Delete an order by ID
 router.delete("/:id", orderController.deleteOrder);
