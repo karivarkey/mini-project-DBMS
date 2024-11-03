@@ -31,7 +31,7 @@ const ManufacturerSchema = new mongoose.Schema({
 });
 
 // Create a model from the schema
-const Manufacturer = mongoose.model('Manufacturer', ManufacturerSchema);
+
 
 // Export the model
-module.exports = Manufacturer;
+module.exports = ManufacturerSchema;

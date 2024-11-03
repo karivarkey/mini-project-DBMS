@@ -2,8 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const ManufacturerSchema = require("./models/manufacturer");
 
+
+const ManufacturerSchema = require("./models/Manufacturer.js");
+const ToySchema = require("./models/Toy");
+const Manufacturer = mongoose.model("Manufacturer", ManufacturerSchema);
+const Toy = mongoose.model("Toy", ToySchema);
 
 const app = express();
 app.use(cors());
@@ -22,9 +26,55 @@ mongoose
   );
 
 
+  app.post('/api/toys', async (req, res) => {
+    try {
+      const { productID, productName, manufacturer, price, category, ageGroup, stockLeft } = req.body;
+
+      // Check if the manufacturer exists
+      const existingManufacturer = await Manufacturer.findById(manufacturer);
+      if (!existingManufacturer) {
+          return res.status(400).json({ error: 'Manufacturer not found' });
+      }
+
+      // Create a new toy
+      const newToy = new Toy({
+          productID,
+          productName,
+          manufacturer,
+          price,
+          category,
+          ageGroup,
+          stockLeft
+      });
+
+      // Save the toy to the database
+      await newToy.save();
+
+      return res.status(201).json(newToy);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'An error occurred while adding the toy' });
+  }
+});
+
+app.get('/api/toys', async (req, res) => {
+  try {
+      const toys = await Toy.find().populate('manufacturer', 'manufacturerName');
+      return res.json(toys);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'An error occurred while retrieving toys' });
+  }
+});
+
+
+
+
+
+
 app.get("/api/manufacturer", async (request, response) => {
-    const manufacturers = await ManufacturerSchema.find({});
-    response.json(manufacturers);
+    const manufacturersList = await Manufacturer.find({});
+    response.json(manufacturersList);
   });
 
 
