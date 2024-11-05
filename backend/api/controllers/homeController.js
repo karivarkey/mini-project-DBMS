@@ -19,8 +19,7 @@ exports.getHome = async (req, res) => {
     const additionalData = {
       title: "Welcome to Our Store",
       description: "Check out our latest products and offers.",
-      imageUrl:
-        "https://res.cloudinary.com/your_cloud_name/image/upload/v1234567890/homeBanner.jpg", // Example image URL
+      imageUrl: imageUrl,
       mostPopularToy: mostPopularToy, // Add the most popular toy to the additional data
     };
 
