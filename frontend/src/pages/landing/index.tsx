@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Search from "./components/search/search";
 import Card from "./components/cards/cards";
+import AiBubble from "./components/AI/ai";
 const Landing = () => {
   const [data, setData] = useState<any>(null); // Using `any` for the data state
   const [toys, setToys] = useState<any>(null); // Using `any` for the toys state
@@ -24,6 +25,7 @@ const Landing = () => {
 
   return (
     <div>
+      <AiBubble />
       <div className="w-full py-2">
         <Search />
       </div>
