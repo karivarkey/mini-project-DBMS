@@ -25,8 +25,10 @@ const Buttons = () => {
 
       {/* Buy Button */}
       <button
-        className={`relative z-10 rounded-full px-6 py-2 ${
-          currentPath === "/" ? "text-black" : "text-black"
+        className={`relative z-10 rounded-full px-6 py-2  transition-all duration-300 ease-in-out ${
+          currentPath === "/"
+            ? "text-black hover:bg-white"
+            : "text-black hover:bg-secondary-gray"
         }`}
         onClick={() => handleNavigation("/")}
       >
@@ -35,8 +37,10 @@ const Buttons = () => {
 
       {/* Sell Button */}
       <button
-        className={`relative z-10 rounded-full px-6 py-2 ${
-          currentPath === "/sell" ? "text-black" : "text-black"
+        className={`relative z-10 rounded-full px-6 py-2 transition-all duration-300 ease-in-out ${
+          currentPath === "/sell"
+            ? "text-black hover:bg-white"
+            : "text-black hover:bg-secondary-gray"
         }`}
         onClick={() => handleNavigation("/sell")}
       >
