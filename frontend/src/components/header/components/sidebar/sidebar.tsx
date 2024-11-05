@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div>
+    <div className="md:hidden block">
       <img
         src="/header/hamburger.svg"
         alt="Menu"
@@ -25,7 +25,7 @@ const Sidebar = () => {
       />
       {/* Sidebar Overlay */}
       <div
-        className={`fixed inset-0 bg-white transition-transform duration-300 ease-in-out transform ${
+        className={`fixed inset-0 bg-white transition-transform duration-300 h-screen z-40 ease-in-out transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div className="w-full flex justify-between items-center px-8 pt-2">
       <div className="flex gap-4 items-center ">
-        <div>
+        <div className="">
           <Sidebar />
         </div>
         <div>
