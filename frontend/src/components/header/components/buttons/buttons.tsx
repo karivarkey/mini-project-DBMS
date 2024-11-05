@@ -1,33 +1,41 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Buttons = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  console.log(currentPath);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [currentPath, setCurrentPath] = useState(location.pathname);
+
+  // Function to handle navigation and update current path
+  const handleNavigation = (path: any) => {
+    setCurrentPath(path);
+    navigate(path); // Use navigate instead of window.location.pathname
+  };
+
   return (
-    <div className="bg-primary-gray p-2 rounded-full flex justify-around w-full gap-5 font-semibold">
-      <button
-        className={
-          currentPath === "/"
-            ? "bg-[#ffffff] text-black  rounded-full px-6 py-1"
-            : "rounded-full px-6 py-1"
-        }
-        onClick={() => {
-          setCurrentPath("/buy");
-          window.location.pathname = "/";
+    <div className="relative bg-primary-gray p-2 rounded-full flex justify-around w-full gap-5 font-semibold">
+      <div
+        className={`absolute top-0 left-0 h-full w-1/2 bg-[#ffffff] rounded-full transition-all duration-300 ease-in-out`}
+        style={{
+          transform:
+            currentPath === "/" ? "translateX(0%)" : "translateX(100%)",
         }}
+      />
+
+      <button
+        className={`relative z-10 rounded-full px-6 py-1 ${
+          currentPath === "/" ? "text-black" : "text-white"
+        }`}
+        onClick={() => setTimeout(() => handleNavigation("/"), 300)}
       >
         BUY
       </button>
+
       <button
-        className={
-          currentPath === "/sell"
-            ? "bg-[#ffffff] text-black  rounded-full px-6 py-1"
-            : "rounded-full px-6 py-1"
-        }
-        onClick={() => {
-          setCurrentPath("/sell");
-          window.location.pathname = "/sell";
-        }}
+        className={`relative z-10 rounded-full px-6 py-1 ${
+          currentPath === "/sell" ? "text-black" : "text-white"
+        }`}
+        onClick={() => setTimeout(() => handleNavigation("/sell"), 300)}
       >
         SELL
       </button>
