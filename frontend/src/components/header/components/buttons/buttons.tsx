@@ -9,33 +9,36 @@ const Buttons = () => {
   // Function to handle navigation and update current path
   const handleNavigation = (path: any) => {
     setCurrentPath(path);
-    navigate(path); // Use navigate instead of window.location.pathname
+    navigate(path);
   };
 
   return (
-    <div className="relative bg-primary-gray p-2 rounded-full flex justify-around w-full gap-5 font-semibold">
+    <div className="relative bg-primary-gray p-2 rounded-full flex justify-around w-full gap-5 font-semibold m-2 ">
+      {/* Background Indicator */}
       <div
-        className={`absolute top-0 left-0 h-full w-1/2 bg-[#ffffff] rounded-full transition-all duration-300 ease-in-out`}
+        className="absolute top-1.5 left-1.5 h-[80%] w-[45%] bg-white rounded-full transition-all duration-300 ease-in-out"
         style={{
           transform:
-            currentPath === "/" ? "translateX(0%)" : "translateX(100%)",
+            currentPath === "/" ? "translateX(0%)" : "translateX(110%)",
         }}
       />
 
+      {/* Buy Button */}
       <button
-        className={`relative z-10 rounded-full px-6 py-1 ${
-          currentPath === "/" ? "text-black" : "text-white"
+        className={`relative z-10 rounded-full px-6 py-2 ${
+          currentPath === "/" ? "text-black" : "text-black"
         }`}
-        onClick={() => setTimeout(() => handleNavigation("/"), 300)}
+        onClick={() => handleNavigation("/")}
       >
         BUY
       </button>
 
+      {/* Sell Button */}
       <button
-        className={`relative z-10 rounded-full px-6 py-1 ${
-          currentPath === "/sell" ? "text-black" : "text-white"
+        className={`relative z-10 rounded-full px-6 py-2 ${
+          currentPath === "/sell" ? "text-black" : "text-black"
         }`}
-        onClick={() => setTimeout(() => handleNavigation("/sell"), 300)}
+        onClick={() => handleNavigation("/sell")}
       >
         SELL
       </button>
