@@ -1,16 +1,19 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Search from "./components/search/search";
-
+import Card from "./components/cards/cards";
 const Landing = () => {
   const [data, setData] = useState<any>(null); // Using `any` for the data state
-
+  const [toys, setToys] = useState<any>(null); // Using `any` for the toys state
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get<any>("http://localhost:5000/api/home"); // Using `any` for the response
-        console.log(res.data);
+
         setData(res.data);
+        const resToys = await axios.get<any>("http://localhost:5000/api/toys"); // Using `any` for the response
+        console.log(resToys.data);
+        setToys(resToys.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -20,7 +23,7 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="">
+    <div>
       <div className="w-full py-2">
         <Search />
       </div>
@@ -46,6 +49,14 @@ const Landing = () => {
             <span className="absolute left-0 right-0 top-3/4 h-[2px] mx-10 bg-black transition-transform duration-300 transform scale-x-0 group-hover:scale-x-100"></span>
           </button>
         </div>
+      </div>
+      <div className="text-center font-poppins font-semibold text-3xl py-10">
+        New Arrivals
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-center px-5">
+        {toys?.map((toy: any) => (
+          <Card key={toy._id} toy={toy} />
+        ))}
       </div>
     </div>
   );
