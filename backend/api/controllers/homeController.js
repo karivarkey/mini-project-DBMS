@@ -1,3 +1,4 @@
+const Toy = require("../models/Toy");
 const cloudinary = require("cloudinary").v2;
 
 exports.getHome = async (req, res) => {
@@ -9,12 +10,18 @@ exports.getHome = async (req, res) => {
     const imageUrl = cloudinary.url(publicId, {
       secure: true, // Use HTTPS
     });
+    const toys = await Toy.find().populate("manufacturer", "name");
+    const mostPopularToy = await Toy.findOne()
+      .sort({ "popularity.purchases": -1 }) // Sort by purchases in descending order
+      .populate("manufacturer", "name"); // Populate manufacturer name
 
-    // Prepare additional data to send back
+    // Prepare additional data
     const additionalData = {
       title: "Welcome to Our Store",
       description: "Check out our latest products and offers.",
-      imageUrl: imageUrl,
+      imageUrl:
+        "https://res.cloudinary.com/your_cloud_name/image/upload/v1234567890/homeBanner.jpg", // Example image URL
+      mostPopularToy: mostPopularToy, // Add the most popular toy to the additional data
     };
 
     // Return the image URL along with additional JSON data
