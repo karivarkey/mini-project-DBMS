@@ -28,10 +28,10 @@ const Landing = () => {
         <img src={data?.imageUrl} alt="New Arrival" className="w-full h-auto" />
         <div className="absolute inset-0 flex items-center flex-col gap-5 justify-center text-black text-center">
           <div className="bg-white bg-opacity-70 p-4">
-            <h1 className="text-2xl md:text-5xl font-light font-poppins pb-2">
+            <h1 className="text-2xl md:text-3xl font-light font-poppins pb-2">
               Explore our new Arrival
             </h1>
-            <h2 className="text-lg md:text-3xl font-bold">
+            <h2 className="text-lg md:text-3xl font-semibold">
               {data?.mostPopularToy?.productName} !!{" "}
               {/* Use optional chaining */}
             </h2>

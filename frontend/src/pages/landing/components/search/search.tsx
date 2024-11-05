@@ -5,7 +5,7 @@ const Search = () => {
         <input
           type="text"
           placeholder="Search"
-          className="w-full px-4 py-1 border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500 rounded-full text-left items-center"
+          className="w-full px-4 py-1 border border-gray-300 focus:outline-none focus:ring focus:ring-gray-300 rounded-full text-left items-center transition-all duration-300 ease-in-out"
         />
       </div>
       <button className="px-4  bg-secondary-gray  rounded-full hover:bg-[#a1a1a1] flex gap-3 items-center text-black font-poppins font-light transition-all duration-300 ease-in-out">
