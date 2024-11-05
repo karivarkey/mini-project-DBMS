@@ -1,7 +1,7 @@
 import Buttons from "./components/buttons/buttons";
 const Header = () => {
   return (
-    <div className="w-full flex justify-between items-center px-2">
+    <div className="w-full flex justify-between items-center px-8 pt-2">
       <div className="flex gap-4 items-center ">
         <div>
           <img src="/header/hamburger.svg" alt="" />
@@ -13,7 +13,14 @@ const Header = () => {
       <div>
         <Buttons />
       </div>
-      <div>PROFILE STUFF</div>
+      <div>
+        <button className="bg-primary-gray p-2 rounded-full px-4 flex items-center justify-center gap-2">
+          <img src="/header/bag.svg" />
+
+          <div className="h-10 w-[0.5px] bg-black mx-1"></div>
+          <h2>Cart</h2>
+        </button>
+      </div>
     </div>
   );
 };
