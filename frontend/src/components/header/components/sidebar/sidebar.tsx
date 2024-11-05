@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div>
+    <div className="h-screen bg-white">
       <img
         src="/header/hamburger.svg"
         alt="Menu"
