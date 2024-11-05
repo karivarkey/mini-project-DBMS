@@ -14,7 +14,13 @@ const Header = () => {
         <Buttons />
       </div>
       <div>
-        <button className="bg-primary-gray p-2 rounded-full px-4 flex items-center justify-center gap-2">
+        <button
+          className="bg-primary-gray p-2 rounded-full px-4 flex items-center justify-center gap-2
+        hover:bg-secondary-gray  transition duration-300 ease-in-out 
+        
+        
+        "
+        >
           <img src="/header/bag.svg" />
 
           <div className="h-10 w-[0.5px] bg-black mx-1"></div>
