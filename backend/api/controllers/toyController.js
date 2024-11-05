@@ -14,7 +14,8 @@ exports.getToys = async (req, res) => {
 
 exports.createToy = async (req, res) => {
   try {
-    const { productID, productName, manufacturer, price, category, ageGroup, stockLeft } = req.body;
+    const { productName, manufacturer, price, category, ageGroup, stockLeft } =
+      req.body;
 
     // Check if the manufacturer exists
     const existingManufacturer = await Manufacturer.findById(manufacturer);
@@ -22,8 +23,19 @@ exports.createToy = async (req, res) => {
       return res.status(400).json({ error: "Manufacturer not found" });
     }
 
-    // Create a new toy document
-    const newToy = new Toy({ productID, productName, manufacturer, price, category, ageGroup, stockLeft });
+    // Create a new toy document with default popularity
+    const newToy = new Toy({
+      productName,
+      manufacturer,
+      price,
+      category,
+      ageGroup,
+      stockLeft,
+      popularity: {
+        views: 0,
+        purchases: 0,
+      },
+    });
 
     // Save the toy document to the database
     await newToy.save();
