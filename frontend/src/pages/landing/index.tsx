@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Search from "./components/search/search";
 import Card from "./components/cards/cards";
 import AiBubble from "./components/AI/ai";
+import Footer from "./components/Footer/Footer";
 const Landing = () => {
   const [data, setData] = useState<any>(null); // Using `any` for the data state
   const [toys, setToys] = useState<any>(null); // Using `any` for the toys state
@@ -65,6 +66,7 @@ const Landing = () => {
           <Card key={toy._id} toy={toy} />
         ))}
       </div>
+      <Footer />
     </div>
   );
 };
