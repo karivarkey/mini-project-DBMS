@@ -101,7 +101,7 @@ const Search = () => {
       </div>
 
       {/* Display loading, results, or empty message */}
-      <div className="relative w-1/3">
+      <div className="relative lg:w-1/3 w-full">
         {loading ? (
           <div className="absolute w-full bg-white shadow-lg rounded-lg p-4">
             <p>Loading toys...</p>
