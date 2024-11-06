@@ -36,13 +36,15 @@ interface ChatBoxProps {
 const fetchToysByCategories = async (categories: string[]): Promise<Toy[]> => {
   try {
     // Make the API call to fetch all toys
-    const response = await axios.get<Toy[]>("http://localhost:5000/api/toys");
+    const response = await axios.get<any>(
+      `${import.meta.env.VITE_BACKEND_URL}/api/toys`
+    );
 
     // Log the API response for debugging
     console.log("API Response:", response.data);
 
     // Filter the toys based on the provided categories
-    const filteredToys = response.data.filter((toy) => {
+    const filteredToys = response.data.filter((toy: any) => {
       const categoryType = toy.category.type; // Access the category type
       const isIncluded = categories.includes(categoryType); // Check if it matches the provided categories
       console.log(
@@ -82,7 +84,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ onClose }) => {
 
     try {
       // Fetch all toys to get the list of categories
-      const response = await axios.get<Toy[]>("http://localhost:5000/api/toys");
+      const response = await axios.get<Toy[]>(
+        `${import.meta.env.VITE_BACKEND_URL}/api/toys`
+      );
+
       const allToys = response.data;
 
       // Extract unique categories from the toys

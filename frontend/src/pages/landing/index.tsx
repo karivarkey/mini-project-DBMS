@@ -9,10 +9,15 @@ const Landing = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get<any>("http://localhost:5000/api/home"); // Using `any` for the response
+        //use env variable for the api url
+        const res = await axios.get<any>(
+          `${import.meta.env.VITE_BACKEND_URL}/api/home`
+        );
 
         setData(res.data);
-        const resToys = await axios.get<any>("http://localhost:5000/api/toys"); // Using `any` for the response
+        const resToys = await axios.get<any>(
+          `${import.meta.env.VITE_BACKEND_URL}/api/toys`
+        );
         console.log(resToys.data);
         setToys(resToys.data);
       } catch (error) {
