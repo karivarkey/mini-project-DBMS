@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Toy } from "../../types/Toy";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Cart from "../../components/cart/cart";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
@@ -137,22 +138,7 @@ const Product = () => {
       </div>
 
       {/* Debugging the cart */}
-      {orderItems.length > 0 && (
-        <div className="fixed bottom-2 bg-gray-400 rounded-full flex items-center justify-center right-2 max-w-[7rem] transition-all transform hover:scale-110 duration-300 ease-in-out animate__animated animate__fadeInUp">
-          <img
-            src="/product/cart.png"
-            alt="Cart"
-            className="w-1/2 p-2 h-auto"
-          />
-          <h1 className="text-white font-poppins font-bold">CART</h1>
-          <div className="min-h-4 bg-red-500 min-w-4 rounded-full relative bottom-5">
-            {/* Show the quantity of this specific product */}
-            {productInCart && (
-              <span className="text-white text-xs font-semibold"></span>
-            )}
-          </div>
-        </div>
-      )}
+      {orderItems.length > 0 && <Cart />}
     </div>
   );
 };
