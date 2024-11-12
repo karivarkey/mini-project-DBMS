@@ -48,6 +48,11 @@ const ToySchema = new mongoose.Schema({
     },
     default: 0,
   },
+  description: {
+    type: String,
+    required: false,
+    default: "No description available",
+  },
 });
 ToySchema.index({ productName: 1, manufacturer: 1 }, { unique: true });
 

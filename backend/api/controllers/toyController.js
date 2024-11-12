@@ -14,8 +14,15 @@ exports.getToys = async (req, res) => {
 
 exports.createToy = async (req, res) => {
   try {
-    const { productName, manufacturer, price, category, ageGroup, stockLeft } =
-      req.body;
+    const {
+      productName,
+      manufacturer,
+      price,
+      category,
+      ageGroup,
+      stockLeft,
+      description,
+    } = req.body;
 
     // Check if the manufacturer exists
     const existingManufacturer = await Manufacturer.findById(manufacturer);
@@ -35,6 +42,7 @@ exports.createToy = async (req, res) => {
         views: 0,
         purchases: 0,
       },
+      description,
     });
 
     // Save the toy document to the database
