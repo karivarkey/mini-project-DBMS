@@ -20,7 +20,7 @@ export interface Popularity {
 export interface Toy {
   _id: string; // Mongoose ObjectId as a string
   productName: string;
-  manufacturer: Manufacturer | string; // Can be the full Manufacturer object or just its ID
+  manufacturer: Manufacturer; // Can be the full Manufacturer object or just its ID
   price: number;
   category: Category;
   ageGroup: [number, number]; // Tuple for age range [lowerLimit, upperLimit]

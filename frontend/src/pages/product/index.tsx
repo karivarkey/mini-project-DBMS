@@ -3,10 +3,15 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Toy } from "../../types/Toy";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css"; // Import Swiper styles
-import "swiper/css/navigation"; // Swiper navigation styles
-import "swiper/css/pagination"; // Swiper pagination styles
-import { Navigation, Pagination } from "swiper/modules"; // Swiper modules
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper/modules";
+import { useAppDispatch, useAppSelector } from "../../app/hooks"; // Import hooks
+import {
+  addItemToOrder,
+  removeItemFromOrder,
+} from "../../features/order/orderSlice"; // Import actions
 
 interface ImageData {
   url: string;
@@ -14,27 +19,31 @@ interface ImageData {
 }
 
 const Product = () => {
-  const { productID } = useParams<{ productID: string }>(); // Get productID from route parameters
-  const [toy, setToy] = useState<Toy | null>(null); // Initialize state with Toy type or null
+  const { productID } = useParams<{ productID: string }>();
+  const [toy, setToy] = useState<Toy | null>(null);
   const [images, setImages] = useState<ImageData[]>([]);
+  const dispatch = useAppDispatch(); // Initialize dispatch
+  const orderItems = useAppSelector((state) => state.order.orderItems); // Access the global order state
 
   useEffect(() => {
     if (productID) {
+      // Fetch toy details
       axios
         .get(`${import.meta.env.VITE_BACKEND_URL}/api/toys/${productID}`)
         .then((response) => {
-          setToy(response.data); // Set toy data from the API response
+          setToy(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching data:", error);
+          console.error("Error fetching toy:", error);
         });
 
+      // Fetch images related to the toy
       axios
         .get(
           `${import.meta.env.VITE_BACKEND_URL}/api/image/${productID}/images`
         )
         .then((response) => {
-          setImages(response.data.images); // Set images data from the API response
+          setImages(response.data.images);
         })
         .catch((error) => {
           console.error("Error fetching images:", error);
@@ -42,9 +51,27 @@ const Product = () => {
     }
   }, [productID]);
 
+  const handleAddToCart = () => {
+    if (toy) {
+      console.log(`Adding to cart: ${toy.productName}`);
+      dispatch(addItemToOrder(toy)); // Dispatch the action to add item to order
+    }
+  };
+
+  const handleRemoveFromCart = () => {
+    if (toy) {
+      console.log(`Removing from cart: ${toy.productName}`);
+      dispatch(removeItemFromOrder(toy._id)); // Dispatch the action to remove item from order
+    }
+  };
+
+  // Find the current quantity of the product in the cart
+  const productInCart = orderItems.find(
+    (item) => item.product._id === toy?._id
+  );
+
   return (
-    <div className="container mx-auto p-6  lg:space-x-6">
-      {/* Left Column: Image Slider */}
+    <div className="container mx-auto p-6 lg:space-x-6">
       <div className="flex flex-col items-center justify-center mb-8 lg:mb-0">
         {images.length > 0 ? (
           <Swiper
@@ -68,43 +95,39 @@ const Product = () => {
         )}
       </div>
 
-      {/* Right Column: Product Details */}
       <div className="lg:w-1/2 space-y-6 pt-5">
         {toy ? (
           <div>
-            {/* Toy Name */}
             <h1 className="text-3xl font-semibold text-gray-800 mb-4 font-poppins">
               {toy.productName}
             </h1>
-
-            {/* Toy Description */}
             <p className="text-gray-600 mb-4">{toy.description}</p>
-
-            {/* Price */}
             <div className="text-2xl font-bold text-green-600 mb-4">
               ${toy.price.toFixed(2)}
             </div>
-
-            {/* Additional Details */}
-            {/* <div className="space-y-2">
+            <div className="space-y-2">
               <p className="text-sm text-gray-700">
-                <strong>Age Range:</strong> {toy.ageRange}
+                <strong>Age Range:</strong> {toy.ageGroup[0]} -{" "}
+                {toy.ageGroup[1]} years
               </p>
               <p className="text-sm text-gray-700">
-                <strong>Category:</strong> {toy.category}
+                <strong>Category:</strong> {toy.category.type}
               </p>
-              <p className="text-sm text-gray-700">
-                <strong>Brand:</strong> {toy.brand}
-              </p>
-            </div> */}
-
-            {/* Call-to-Action Buttons */}
-            <div className="mt-6 space-x-4">
-              <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition-colors">
-                Add to Cart
+            </div>
+            <div className="mt-6 flex gap-2">
+              <button
+                onClick={handleAddToCart}
+                className="px-2 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition-colors "
+              >
+                {productInCart
+                  ? `Add More to Cart : (${productInCart.quantity})`
+                  : "Add to Cart"}
               </button>
-              <button className="px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition-colors">
-                Add to Wishlist
+              <button
+                onClick={handleRemoveFromCart}
+                className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition-colors"
+              >
+                Remove from Cart
               </button>
             </div>
           </div>
@@ -112,6 +135,24 @@ const Product = () => {
           <p className="text-gray-500">Loading toy details...</p>
         )}
       </div>
+
+      {/* Debugging the cart */}
+      {orderItems.length > 0 && (
+        <div className="fixed bottom-2 bg-gray-400 rounded-full flex items-center justify-center right-2 max-w-[7rem] transition-all transform hover:scale-110 duration-300 ease-in-out animate__animated animate__fadeInUp">
+          <img
+            src="/product/cart.png"
+            alt="Cart"
+            className="w-1/2 p-2 h-auto"
+          />
+          <h1 className="text-white font-poppins font-bold">CART</h1>
+          <div className="min-h-4 bg-red-500 min-w-4 rounded-full relative bottom-5">
+            {/* Show the quantity of this specific product */}
+            {productInCart && (
+              <span className="text-white text-xs font-semibold"></span>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
