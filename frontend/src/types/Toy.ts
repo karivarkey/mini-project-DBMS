@@ -27,5 +27,6 @@ export interface Toy {
   stockLeft: number;
   popularity: Popularity;
   productImages: ProductImage[]; // Array of ProductImage objects (references or populated)
-  __v?: number; // Optional version key field
+  __v?: number; // Optional version key field,
+  description: string;
 }
