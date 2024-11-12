@@ -2,17 +2,24 @@ import React from "react";
 import placeholder from "./image.png";
 import star from "./assets/star.svg";
 import { Toy } from "../../../../types/Toy";
+import { useNavigate } from "react-router-dom";
 type Props = {
   toy: Toy; // Accept anything as a prop
 };
 
 const Card: React.FC<Props> = ({ toy }) => {
+  const navigate = useNavigate();
   return (
     <div className="card relative w-full max-w-xs group">
       {/* Darkening overlay for the entire card */}
       <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <div className="flex items-center justify-center h-full">
-          <button className="bg-white px-6 py-2 rounded-full font-poppins font-light hover:bg-gray-700">
+          <button
+            className="bg-white px-6 py-2 rounded-full font-poppins z-50 font-light hover:bg-gray-700 hover:text-white transition duration-300"
+            onClick={() => {
+              navigate(`/product/${toy._id}`);
+            }}
+          >
             Add to cart
           </button>
         </div>
