@@ -4,19 +4,27 @@ import Search from "./components/search/search";
 import Card from "./components/cards/cards";
 import AiBubble from "./components/AI/ai";
 import Footer from "./components/Footer/Footer";
+import { Toy } from "../../types/Toy";
+
+interface Data {
+  toy: Toy[];
+  imageUrl: string;
+  mostPopularToy: Toy;
+}
+
 const Landing = () => {
-  const [data, setData] = useState<any>(null); // Using `any` for the data state
-  const [toys, setToys] = useState<any>(null); // Using `any` for the toys state
+  const [data, setData] = useState<Data | null>(null); // Using `any` for the data state
+  const [toys, setToys] = useState<Toy[] | null>(null); // Using `any` for the toys state
   useEffect(() => {
     const fetchData = async () => {
       try {
         //use env variable for the api url
-        const res = await axios.get<any>(
+        const res = await axios.get<Data | null>(
           `${import.meta.env.VITE_BACKEND_URL}/api/home`
         );
 
         setData(res.data);
-        const resToys = await axios.get<any>(
+        const resToys = await axios.get<Toy[] | null>(
           `${import.meta.env.VITE_BACKEND_URL}/api/toys`
         );
         console.log(resToys.data);
@@ -62,7 +70,7 @@ const Landing = () => {
         New Arrivals
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-center px-5">
-        {toys?.map((toy: any) => (
+        {toys?.map((toy: Toy) => (
           <Card key={toy._id} toy={toy} />
         ))}
       </div>
