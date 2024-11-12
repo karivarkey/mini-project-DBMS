@@ -46,3 +46,24 @@ exports.createToy = async (req, res) => {
     res.status(500).json({ error: "An error occurred while adding the toy" });
   }
 };
+
+exports.getToyById = async (req, res) => {
+  try {
+    const { productID } = req.params;
+
+    // Find the toy by its productID and populate the manufacturer details
+    const toy = await Toy.findById(productID).populate("manufacturer", "name");
+
+    // If the toy is not found, return a 404 error
+    if (!toy) {
+      return res.status(404).json({ error: "Toy not found" });
+    }
+
+    res.json(toy);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving the toy" });
+  }
+};
