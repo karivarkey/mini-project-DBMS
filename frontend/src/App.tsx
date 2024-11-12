@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/landing";
+
 import Sell from "./pages/sell";
 import Header from "./components/header/header";
 import Product from "./pages/product";
+
 const App = () => {
   return (
     <BrowserRouter>
