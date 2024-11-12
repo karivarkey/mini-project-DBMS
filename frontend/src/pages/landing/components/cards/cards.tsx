@@ -1,9 +1,9 @@
 import React from "react";
 import placeholder from "./image.png";
 import star from "./assets/star.svg";
-
+import { Toy } from "../../../../types/Toy";
 type Props = {
-  toy: any; // Accept anything as a prop
+  toy: Toy; // Accept anything as a prop
 };
 
 const Card: React.FC<Props> = ({ toy }) => {

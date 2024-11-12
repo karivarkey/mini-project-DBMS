@@ -69,11 +69,15 @@ const Landing = () => {
       <div className="text-center font-poppins font-semibold text-3xl py-10">
         New Arrivals
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-center px-5">
+
+      <div className="flex flex-wrap justify-around gap-5 lg:gap-20 lg:px-10 px-10 items-center">
         {toys?.map((toy: Toy) => (
-          <Card key={toy._id} toy={toy} />
+          <div key={toy._id} className="flex-1 min-w-[30%] lg:min-w-[20%]">
+            <Card toy={toy} />
+          </div>
         ))}
       </div>
+
       <Footer />
     </div>
   );
