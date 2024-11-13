@@ -52,7 +52,7 @@ const Cart = () => {
         >
           {/* Pop-up modal container with scaling and sliding animation */}
           <div
-            className="bg-white p-6 w-full max-w-md rounded-t-lg shadow-lg transform transition-all duration-300 ease-out"
+            className="bg-white p-6 w-full rounded-t-lg shadow-lg transform transition-all duration-300 ease-out "
             onClick={(e) => e.stopPropagation()} // Prevent click event from closing the modal
             style={{
               transform: isModalOpen
