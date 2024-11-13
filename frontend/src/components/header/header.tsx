@@ -1,6 +1,8 @@
 import Buttons from "./components/buttons/buttons";
 import Sidebar from "./components/sidebar/sidebar";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex justify-between items-center px-8 pt-2">
       <div className="flex gap-4 items-center ">
@@ -8,7 +10,13 @@ const Header = () => {
           <Sidebar />
         </div>
         <div>
-          <h1 className="font-poppins text-3xl font-extralight ">toy.ai</h1>
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <h1 className="font-poppins text-3xl font-extralight ">toy.ai</h1>
+          </button>
         </div>
       </div>
       <div className="hidden lg:block">

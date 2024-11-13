@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useAppSelector } from "../../app/hooks"; // Access global state
 import { useAppDispatch } from "../../app/hooks"; // Access dispatch if needed for actions (e.g. removing items)
 import { removeItemFromOrder } from "../../features/order/orderSlice"; // Import action to remove items from the cart
-
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const orderItems = useAppSelector((state) => state.order.orderItems); // Access the order items from the Redux store
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -111,7 +113,9 @@ const Cart = () => {
                 Close
               </button>
               <button
-                onClick={() => alert("Proceeding to Checkout")} // Replace with actual checkout functionality
+                onClick={
+                  () => navigate("/checkout") // Navigate to the checkout page
+                } // Replace with actual checkout functionality
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg"
               >
                 Checkout

@@ -4,6 +4,7 @@ import Search from "./components/search/search";
 import Card from "./components/cards/cards";
 import AiBubble from "./components/AI/ai";
 import Footer from "./components/Footer/Footer";
+import Cart from "../../components/cart/cart";
 import { Toy } from "../../types/Toy";
 
 interface Data {
@@ -43,6 +44,7 @@ const Landing = () => {
       <div className="w-full py-2">
         <Search />
       </div>
+
       <div className="relative">
         <img
           src={data?.imageUrl}
@@ -69,8 +71,10 @@ const Landing = () => {
       <div className="text-center font-poppins font-semibold text-3xl py-10">
         New Arrivals
       </div>
-
-      <div className="flex flex-wrap justify-around gap-5 lg:gap-20 lg:px-10 px-10 items-center">
+      <div className="z-50">
+        <Cart />
+      </div>
+      <div className="flex flex-wrap justify-around gap-5 lg:gap-20 lg:px-10 px-10 items-center z-0">
         {toys?.map((toy: Toy) => (
           <div key={toy._id} className="flex-1 min-w-[30%] lg:min-w-[20%]">
             <Card toy={toy} />
