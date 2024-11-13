@@ -2,27 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { sendMessageToGeminiAI } from "./geminiAPI"; // Import the utility function
 import axios from "axios";
-
-interface Toy {
-  _id: string;
-  productName: string;
-  manufacturer: {
-    _id: string;
-  };
-  price: number;
-  category: {
-    type: string; // This matches the "type" property in the category object
-    features: string[];
-  };
-  ageGroup: number[];
-  stockLeft: number;
-  popularity: {
-    views: number;
-    purchases: number;
-    _id: string;
-  };
-  __v: number;
-}
+import { Toy } from "../../../../types/Toy";
 
 interface ChatMessage {
   sender: "user" | "ai";
@@ -36,7 +16,7 @@ interface ChatBoxProps {
 const fetchToysByCategories = async (categories: string[]): Promise<Toy[]> => {
   try {
     // Make the API call to fetch all toys
-    const response = await axios.get<any>(
+    const response = await axios.get<Toy[]>(
       `${import.meta.env.VITE_BACKEND_URL}/api/toys`
     );
 
@@ -44,7 +24,7 @@ const fetchToysByCategories = async (categories: string[]): Promise<Toy[]> => {
     console.log("API Response:", response.data);
 
     // Filter the toys based on the provided categories
-    const filteredToys = response.data.filter((toy: any) => {
+    const filteredToys = response.data.filter((toy: Toy) => {
       const categoryType = toy.category.type; // Access the category type
       const isIncluded = categories.includes(categoryType); // Check if it matches the provided categories
       console.log(
