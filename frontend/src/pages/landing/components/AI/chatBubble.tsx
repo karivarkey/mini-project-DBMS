@@ -150,7 +150,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ onClose }) => {
 
   return (
     <div
-      className={`fixed bottom-4 right-4 bg-white p-4 w-64 lg:w-96 h-96 rounded-lg shadow-lg z-30 flex flex-col
+      className={`fixed bottom-4 left-4 bg-white p-4 w-64 lg:w-96 h-96 rounded-lg shadow-lg z-30 flex flex-col
       transition-all duration-300 ${
         isVisible
           ? "opacity-100 translate-y-0" // Fully visible, normal position

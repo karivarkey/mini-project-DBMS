@@ -14,7 +14,7 @@ const AiBubble: React.FC = () => {
     <>
       <button
         onClick={toggleChatBox}
-        className="fixed z-20 bottom-4 right-4 bg-white p-3 rounded-full shadow-lg flex items-center justify-center"
+        className="fixed z-20 bottom-4 left-4 bg-white p-3 rounded-full shadow-lg flex items-center justify-center"
       >
         <img src={bubble} alt="AI Bubble" className="w-8 h-8" />
       </button>
