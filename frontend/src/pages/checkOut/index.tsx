@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../app/hooks"; // Hook to access the global state
+import Forms from "./components/Forms";
 
 const CheckOut = () => {
   // Access the global cart state
@@ -46,6 +47,9 @@ const CheckOut = () => {
           Total: ${totalPrice.toFixed(2)}
         </div>
       )}
+
+      {/* Display form */}
+      <Forms />
     </div>
   );
 };
