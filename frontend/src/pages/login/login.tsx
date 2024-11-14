@@ -3,21 +3,23 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
+import toast from "react-hot-toast";
 const firebaseConfig = {
-  apiKey: "AIzaSyAsU3cx6zwCEgx1jKjgwe32vVMngh3F58U",
-  authDomain: "toys-67cac.firebaseapp.com",
-  projectId: "toys-67cac",
-  storageBucket: "toys-67cac.firebasestorage.app",
-  messagingSenderId: "933438963745",
-  appId: "1:933438963745:web:36062acbc2fbb5f05fa360",
-  measurementId: "G-XEE6KBC92G"
+  apiKey: "AIzaSyCLpw_Uq_rFNraPtyIMsCehR2IBgSvQFs4",
+
+  authDomain: "toyaiweb.firebaseapp.com",
+
+  projectId: "toyaiweb",
+
+  storageBucket: "toyaiweb.firebasestorage.app",
+
+  messagingSenderId: "713559921121",
+
+  appId: "1:713559921121:web:cc779e8f5d29971905c2a0",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const Login = () => {
   const auth = getAuth();
@@ -29,15 +31,21 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isHuman) {
-      alert("Please check the 'Yes, I am a human' box to continue.");
+      toast.error("Please check the 'Yes, I am a human' box to continue.");
       return;
     }
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      const userString = JSON.stringify(auth.currentUser);
-      navigate("/landing", { state: { userString } });
+
+      toast.success(
+        `Welcome back ${
+          auth.currentUser?.displayName || auth.currentUser?.email
+        }`
+      );
+      navigate("/landing");
     } catch (error) {
-      alert("Incorrect password");
+      console.log(error);
+      toast.error("Wrong password");
     }
   };
 
@@ -47,11 +55,11 @@ const Login = () => {
       <h1 className="text-4xl md:text-6xl font-bold font-poppins text-center mb-6">
         Toy.AI
       </h1>
-      
+
       {/* Login Box */}
       <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md text-center">
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
-        
+
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           {/* Email Input */}
           <input
@@ -61,7 +69,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCE1E4] focus:border-transparent"
           />
-          
+
           {/* Password Input */}
           <input
             type="password"
@@ -70,7 +78,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCE1E4] focus:border-transparent"
           />
-          
+
           {/* Human Verification Checkbox */}
           <div className="flex ml-20 mt-0.5">
             <input
@@ -102,4 +110,3 @@ const Login = () => {
 };
 
 export default Login;
-
