@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/landing";
-
+import Login from "./pages/login/login";
 import Sell from "./pages/sell";
 import Header from "./components/header/header";
 import Product from "./pages/product";
@@ -35,7 +35,8 @@ const App = () => {
         }}
       />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/sell" element={<Sell />} />
         <Route path="/product/:productID" element={<Product />} />
         <Route path="/checkout" element={<CheckOut />} />
