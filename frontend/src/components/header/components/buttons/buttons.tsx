@@ -19,7 +19,7 @@ const Buttons = () => {
         className="absolute top-1.5 left-1.5 h-[80%] w-[45%] bg-white rounded-full transition-all duration-300 ease-in-out"
         style={{
           transform:
-            currentPath === "/" ? "translateX(0%)" : "translateX(110%)",
+            currentPath === "/landing" ? "translateX(0%)" : "translateX(110%)",
         }}
       />
 
@@ -30,7 +30,7 @@ const Buttons = () => {
             ? "text-black hover:bg-white"
             : "text-black hover:bg-secondary-gray"
         }`}
-        onClick={() => handleNavigation("/")}
+        onClick={() => handleNavigation("/landing")}
       >
         BUY
       </button>

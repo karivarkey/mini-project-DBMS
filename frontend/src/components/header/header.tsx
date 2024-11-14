@@ -12,7 +12,7 @@ const Header = () => {
         <div>
           <button
             onClick={() => {
-              navigate("/");
+              navigate("/landing");
             }}
           >
             <h1 className="font-poppins text-3xl font-extralight ">toy.ai</h1>
