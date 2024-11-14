@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Landing from "./pages/landing";
-
+import Login from "./pages/login/login";
 import Sell from "./pages/sell";
 import Header from "./components/header/header";
 import Product from "./pages/product";
@@ -8,9 +8,14 @@ import CheckOut from "./pages/checkOut";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
+  const location = useLocation();
+
+  // Check if the current path is the login page
+  const showHeader = location.pathname !== "/";
+
   return (
-    <BrowserRouter>
-      <Header />
+    <>
+      {showHeader && <Header />}
       <Toaster
         toastOptions={{
           style: {
@@ -35,13 +40,20 @@ const App = () => {
         }}
       />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/sell" element={<Sell />} />
         <Route path="/product/:productID" element={<Product />} />
         <Route path="/checkout" element={<CheckOut />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 };
 
-export default App;
+const AppWrapper = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+export default AppWrapper;
