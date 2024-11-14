@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import OrderCard from "./components/orderCard/orderCard";
 import { Order } from "../../types/Order";
 
