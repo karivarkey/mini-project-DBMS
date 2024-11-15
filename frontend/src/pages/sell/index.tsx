@@ -12,7 +12,7 @@ const Sell = () => {
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
-  const handleAddProduct = async (e) => {
+  const handleAddProduct = async (e: any) => {
     e.preventDefault();
 
     const newProduct = {
