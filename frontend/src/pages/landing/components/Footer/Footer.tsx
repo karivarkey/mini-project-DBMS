@@ -5,8 +5,12 @@ const Footer = () => {
         toy.ai
       </div>
       <div className="flex font-poppins items-center justify-around w-full font-light">
-        <h1>HOME</h1>
-        <h1>ABOUT</h1>
+        <a
+        href="/landing"
+        >HOME</a>
+        <a
+        href="/about"
+        >ABOUT</a>
         <h2>CONTACT</h2>
       </div>
       <div className="flex font-poppins items-center justify-around w-full font-light text-gray-500">
