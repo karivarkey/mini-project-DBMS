@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import placeholder from "./image.png";
 import star from "./assets/star.svg";
 import { Toy } from "../../../../types/Toy";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+
+// Define the structure of an image object
+type Image = {
+  url: string;
+  publicID?: string; // if you need it, otherwise omit
+};
+
 type Props = {
   toy: Toy; // Accept anything as a prop
 };
 
 const Card: React.FC<Props> = ({ toy }) => {
   const navigate = useNavigate();
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Image[]>([]); // Set type for images
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/image/${toy._id}/images`)
@@ -23,6 +30,7 @@ const Card: React.FC<Props> = ({ toy }) => {
         console.error("Error fetching images:", error);
       });
   }, [toy._id]);
+
   return (
     <div className="card relative w-full max-w-xs group">
       {/* Darkening overlay for the entire card */}
@@ -44,7 +52,7 @@ const Card: React.FC<Props> = ({ toy }) => {
         <img
           src={images.length > 0 ? images[0].url : placeholder}
           alt=""
-          className="w-full h-auto max-h-52 object-contain transition duration-300 group-hover:opacity-10" // Apply opacity change on card hover
+          className="w-full h-auto max-h-52 object-contain transition duration-300 group-hover:opacity-10"
         />
       </div>
 
