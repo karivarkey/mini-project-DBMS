@@ -86,7 +86,7 @@ const Product = () => {
                 <img
                   src={image.url}
                   alt="Toy Image"
-                  className="w-full h-full object-cover"
+                  className="w-fit h-fit object-cover"
                 />
               </SwiperSlide>
             ))}
