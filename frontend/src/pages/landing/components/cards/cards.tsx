@@ -3,12 +3,26 @@ import placeholder from "./image.png";
 import star from "./assets/star.svg";
 import { Toy } from "../../../../types/Toy";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 type Props = {
   toy: Toy; // Accept anything as a prop
 };
 
 const Card: React.FC<Props> = ({ toy }) => {
   const navigate = useNavigate();
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/image/${toy._id}/images`)
+      .then((response) => {
+        console.log(response.data.images);
+        setImages(response.data.images);
+      })
+      .catch((error) => {
+        console.error("Error fetching images:", error);
+      });
+  }, [toy._id]);
   return (
     <div className="card relative w-full max-w-xs group">
       {/* Darkening overlay for the entire card */}
@@ -28,7 +42,7 @@ const Card: React.FC<Props> = ({ toy }) => {
       {/* Image container */}
       <div className="relative w-full flex items-center justify-center">
         <img
-          src={placeholder}
+          src={images.length > 0 ? images[0].url : placeholder}
           alt=""
           className="w-full h-auto max-h-52 object-contain transition duration-300 group-hover:opacity-10" // Apply opacity change on card hover
         />
