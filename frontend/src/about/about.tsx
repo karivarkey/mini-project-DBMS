@@ -1,5 +1,4 @@
-import React from "react";
-import about from './asssets/Dbms.png'
+import about from "./asssets/Dbms.png";
 import Footer from "../pages/landing/components/Footer/Footer";
 const About = () => {
   return (
@@ -13,8 +12,8 @@ const About = () => {
           learning, and joy in children and adults alike. Our mission is to
           provide a unique collection of high-quality toys that spark
           imagination and bring people together. Whether you're looking for
-          something educational, fun, or nostalgic, we have a toy for every
-          age and interest.
+          something educational, fun, or nostalgic, we have a toy for every age
+          and interest.
         </p>
 
         {/* Centered Image */}
