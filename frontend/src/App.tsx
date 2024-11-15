@@ -6,7 +6,7 @@ import Header from "./components/header/header";
 import Product from "./pages/product";
 import CheckOut from "./pages/checkOut";
 import { Toaster } from "react-hot-toast";
-
+import About from "./about/about";
 const App = () => {
   const location = useLocation();
 
@@ -45,6 +45,7 @@ const App = () => {
         <Route path="/sell" element={<Sell />} />
         <Route path="/product/:productID" element={<Product />} />
         <Route path="/checkout" element={<CheckOut />} />
+        <Route path ="/about" element={<About/>}/>
       </Routes>
     </>
   );
