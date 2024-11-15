@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 const Sell = () => {
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
-  const [photo, setPhoto] = useState("");
+
   const [ageRange, setAgeRange] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +18,7 @@ const Sell = () => {
     const newProduct = {
       productName,
       price,
-      photo,
+
       ageRange,
       category,
       description,
@@ -26,7 +26,7 @@ const Sell = () => {
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/products`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/toys`,
         newProduct
       );
       toast.success("Product added successfully!");
@@ -67,7 +67,7 @@ const Sell = () => {
           />
         </div>
 
-        <div className="flex flex-col mb-4">
+        {/* <div className="flex flex-col mb-4">
           <label className="text-lg font-medium mb-1">Photo URL</label>
           <input
             type="text"
@@ -76,7 +76,7 @@ const Sell = () => {
             className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FCE1E4]"
             required
           />
-        </div>
+        </div> */}
 
         <div className="flex flex-col mb-4">
           <label className="text-lg font-medium mb-1">Age Range</label>

@@ -15,8 +15,9 @@ interface Data {
 
 const Landing = () => {
   const [data, setData] = useState<Data | null>(null);
-  const [toys, setToys] = useState<Toy[] | null>(null);
-  const cardsRef = useRef<HTMLDivElement>(null); // Create a ref for the cards section
+  const [toys, setToys] = useState<Toy[]>([]);
+  const [filteredToys, setFilteredToys] = useState<Toy[]>([]); // State to manage filtered toys
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,8 +30,8 @@ const Landing = () => {
         const resToys = await axios.get<Toy[] | null>(
           `${import.meta.env.VITE_BACKEND_URL}/api/toys`
         );
-        console.log(resToys.data);
-        setToys(resToys.data);
+        setToys(resToys.data || []);
+        setFilteredToys(resToys.data || []); // Initialize filteredToys to show all toys initially
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -50,7 +51,12 @@ const Landing = () => {
     <div>
       <AiBubble />
       <div className="w-full py-2">
-        <Search />
+        {/* Pass filteredToys and setFilteredToys to Search */}
+        <Search
+          toys={toys}
+          filteredToys={filteredToys}
+          setFilteredToys={setFilteredToys}
+        />
       </div>
 
       <div className="relative">
@@ -69,7 +75,7 @@ const Landing = () => {
             </h2>
           </div>
           <button
-            onClick={scrollToCards} // Add onClick to scroll to cards section
+            onClick={scrollToCards}
             className="relative bg-[#FCE1E4] px-6 py-2 rounded-full font-poppins font-regular group hover:bg-white transition duration-300"
           >
             <span className="relative z-10 text-sm md:text-base">
@@ -83,17 +89,17 @@ const Landing = () => {
       <div className="text-center font-poppins font-semibold text-3xl py-10">
         New Arrivals
       </div>
-      
+
       <div className="z-50">
         <Cart />
       </div>
 
       {/* Cards Section */}
       <div
-        ref={cardsRef} // Attach the ref to the cards section
+        ref={cardsRef}
         className="flex flex-wrap justify-around gap-5 lg:gap-20 lg:px-10 px-10 items-center z-0"
       >
-        {toys?.map((toy: Toy) => (
+        {filteredToys.map((toy: Toy) => (
           <div key={toy._id} className="flex-1 min-w-[30%] lg:min-w-[20%]">
             <Card toy={toy} />
           </div>
